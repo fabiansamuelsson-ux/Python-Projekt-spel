@@ -1,0 +1,54 @@
+import time
+import random
+
+#Spel
+def print_slowly(text, delay=0.05):
+    for char in text:
+        print(char, end='', flush=True)
+        time.sleep(delay)
+    print()
+
+
+class Skeleton:
+    def __init__(self):
+       self.HP = 20
+
+class The_Undead:
+   def __init__(self):
+      self.HP = 15
+       
+
+class Adventurer:
+   max_LVL = 10
+
+   def __init__(self, name, HP=20, STR=5, LVL=1):
+      self.name = name
+      self.HP = HP
+      self.STR = STR
+      self.LVL = LVL
+      self.game_over = False
+
+   def level_up(self):
+      if self.game_over:
+         print_slowly("The game is over")
+         return
+
+      if self.LVL < self.max_LVL:
+         self.LVL += 1
+         self.HP += 2
+         self.STR += 1
+         print_slowly(f"{self.name} leveled up to {self.LVL}!")
+         print_slowly(f"HP is now {self.HP}, STR is now {self.STR}.")
+
+         if self.LVL == self.max_LVL:
+            print_slowly(f"Congratulations adventurer {self.name}, you have reached level {self.LVL}!")
+            self.game_over = True
+
+   def status(self):
+        return f"{self.name} - LVL {self.LVL} HP {self.HP} STR {self.STR}"
+
+def main():
+   name = input("What is your name adventurer? ")
+   print_slowly(f"I a sorry {name}")
+   player = Adventurer(name)
+   print_slowly(player.status)
