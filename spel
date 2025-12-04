@@ -28,15 +28,15 @@ class fiende:
    def attack_damage(self):
       return random.randint(self.damage_range[0], self.damage_range[1])
    
-def spawn_enemy_for_level(lvl):
-    if 1 <= lvl <= 3:
+def spawn_enemy_for_level(LVL):
+    if 1 <= LVL <= 3:
         return fiende("Larry", (1, 3), (4, 6), (1, 2), hp=10)
-    elif 4 <= player.lvl <= 6:
+    elif 4 <= player.LVL <= 6:
         return fiende("Zombie", (4, 7), (7, 9), (2, 4), hp=20)
     elif 7 <= player.LVL <= 9:
         return fiende("Wolves", (8, 10), (10, 14), (4, 6), hp=30)
     else:
-        enemy_type = random.choice([
+        enemy_type = random.randrange([
             ("Larry", (1, 3), (4, 6), (1, 2), 10),
             ("Zombie", (4, 6), (7, 9), (2, 4), 20),
             ("Wolves", (7, 9), (10, 14), (4, 6), 30)
@@ -79,7 +79,8 @@ class adventurer:
 
    def level_up(self):
       if self.game_over:
-         print_slowly("The game is over")
+         print_slowly("GAME OVER"
+         "You have failed in clearing the dungeon, the monsters within have multiplied and escaped. The world has been run over and destroyed.")
          return
 
       if self.LVL < self.max_LVL:
@@ -117,7 +118,7 @@ class Kista:
 class fälla:
     def __init__(self, damage=None, type="spike"):
         if damage is None:
-            damage = random.randint(1, 15)
+            damage = random.randint(1, 10)
         self.damage = damage
         self.type = type
 
@@ -186,7 +187,10 @@ while player.LVL < player.max_LVL and not player.game_over:
             encounter = Open(player)
         elif DoorNumber == "3":
             print_slowly("You choose the door to the left!")
-            encounter = Open(player)     
+            encounter = Open(player)    
+        else:
+            print_slowly("Please enter a valid input fellow guild member") 
+            continue
 
         if isinstance(encounter, Kista):
             print_slowly("You have found a chest!")
@@ -247,6 +251,3 @@ while player.LVL < player.max_LVL and not player.game_over:
                     print_slowly(player.status())
             else:
                 print_slowly("Unknown action. Try 'a', 'i' or 's'.")
-if player.HP < 0:
-    print_slowly("GAME OVER")
-    print_slowly("You have failed in clearing the dungeon, the monsters within have multiplied and escaped. The world has been run over and destroyed.")
