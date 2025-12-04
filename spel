@@ -3,7 +3,7 @@ import random
 from pyfiglet import Figlet
 f = Figlet(font="doom")
 
-print(f.renderText("GUILD CRUSHER 3D"))
+print(f.renderText("DDD(Dungeon Destroyer Dome)"))
 
 #Spel
 def print_slowly(text, delay=0.05):
