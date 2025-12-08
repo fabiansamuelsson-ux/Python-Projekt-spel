@@ -3,10 +3,10 @@ import random
 from pyfiglet import Figlet
 f = Figlet(font="doom")
 
-print(f.renderText("(Dungeon Destroyer Dome)"))
+print(f.renderText("DDD(Dungeon Destroyer Dome)"))
 
 #Spel
-def print_slowly(text, delay=0.05):
+def print_slowly(text, delay=0.00):
     for char in text:
         print(char, end='', flush=True)
         time.sleep(delay)
@@ -24,10 +24,10 @@ class fiende:
         self.damage = random.randint(self.damage_range[0], self.damage_range[1])
         self.max_HP = hp if hp is not None else 10 + (self.LVL - 1) * 2 + max(0, self.STR - 4)
         self.HP = self.max_HP
-    
+
     def attack_damage(self):
         return random.randint(self.damage_range[0], self.damage_range[1])
-    
+
 def spawn_enemy_for_level(LVL):
     if 1 <= LVL <= 3:
         return fiende("Larry", (1, 3), (4, 6), (1, 2), hp=10)
@@ -43,59 +43,59 @@ def spawn_enemy_for_level(LVL):
         ])
         return fiende(enemy_type[0], enemy_type[1], enemy_type[2], enemy_type[3], hp=enemy_type[4])
     
+    
 class adventurer:
     max_LVL = 10
+    def __init__(self, name, HP=20, STR=5, LVL=1):
+        self.name = name
+        self.HP = HP
+        self.STR = STR
+        self.LVL = LVL
+        self.game_over = False
+        self.inventory = self.Inventory()
 
-class Inventory:
-    def __init__(self):
-        self.items = []
-    def add_item(self, item):
+        if self.LVL < self.max_LVL:
+            self.LVL += 1
+            self.HP += 2
+            self.STR += 1
+            print_slowly(f"{self.name} leveled up to {self.LVL}!")
+            print_slowly(f"HP is now {self.HP}, STR is now {self.STR}.")
 
-        self.items.append(item)
-        print_slowly(f"{item} has been added to your inventory")
+    def status(self):
+        return f"{self.name} - LVL {self.LVL} HP {self.HP} STR {self.STR}"
 
-def drop_item(self, item):
-    if item in self.items:
-        self.items.remove(item)
-        print_slowly(f"{item} has been dropped")
-    else:
-        print_slowly(f"{item} is not in inventory")
+    class Inventory:
+        def __init__(self):
+            self.items = []
+        def add_item(self, item):
 
-def show_Inventory(self):
-    if not self.items:
-        print_slowly("inventory is empty")
-    else:
-        print_slowly("Your inventory contains:")
-    for i, item in enumerate(self.items, 1):
-        print_slowly(f"{i}. {item}")
+            self.items.append(item)
+            print_slowly(f"{item} has been added to your inventory")
 
-def __init__(self, name, HP=20, STR=5, LVL=1):
-    self.name = name
-    self.HP = HP
-    self.STR = STR
-    self.LVL = LVL
-    self.game_over = False
-    self.inventory = self.Inventory()
+        def drop_item(self, item):
+            if item in self.items:
+                self.items.remove(item)
+                print_slowly(f"{item} has been dropped")
+            else:
+                print_slowly(f"{item} is not in inventory")
 
-    if HP <= 0:
-        print_slowly("GAME OVER"
-        "You have failed in clearing the dungeon, the monsters within have multiplied and escaped. The world has been run over and destroyed.")
-        
-        return
+        def show_Inventory(self):
+            if not self.items:
+                print_slowly("inventory is empty")
+            else:
+                print_slowly("Your inventory contains:")
+                for i, item in enumerate(self.items, 1):
+                    print_slowly(f"{i}. {item}")
 
-    if self.LVL < self.max_LVL:
-        self.LVL += 1
-        self.HP += 2
-        self.STR += 1
-        print_slowly(f"{self.name} leveled up to {self.LVL}!")
-        print_slowly(f"HP is now {self.HP}, STR is now {self.STR}.")
+    def level_up(self):
+        if self.game_over:
+            print_slowly("GAME OVER"
+            "You have failed in clearing the dungeon, the monsters within have multiplied and escaped. The world has been run over and destroyed.")
+            return
 
-    if self.LVL == self.max_LVL:
-        print_slowly(f"Congratulations adventurer {self.name}, you have reached level {self.LVL}!")
-        self.game_over = True
-
-def status(self):
-    return f"{self.name} - LVL {self.LVL} HP {self.HP} STR {self.STR}"
+        if self.LVL == self.max_LVL:
+            print_slowly(f"Congratulations adventurer {self.name}, you have reached level {self.LVL}!")
+            self.game_over = True
 
 def Open(adventurer):
     facing = random.randrange(3)
@@ -105,7 +105,7 @@ def Open(adventurer):
         return spawn_enemy_for_level(adventurer.LVL)
     else:
         return fälla()
-    
+
 class Kista:
     def __init__(self):
         self.möjliga_saker = [
@@ -128,8 +128,7 @@ class fälla:
         print_slowly(f"You took {self.damage} damage! HP is now {adventurer.HP}.")
         
         if player.HP < 0:
-            print_slowly(f"{adventurer.name} has been defeated by the trap..."
-            "You have failed in clearing the dungeon, the monsters within have multiplied and escaped. The world has been run over and destroyed.")
+            print_slowly(f"{adventurer.name} has been defeated by the trap...")
             player.game_over = True
             return False
         return True
@@ -174,7 +173,6 @@ while player.LVL < player.max_LVL and not player.game_over:
     DoorNumber = None
     while DoorNumber not in ["1", "2", "3"]:
         DoorNumber = input("""Which door do you choose adventurer?, the dungeon is not clear yet
-        
 [1] The door to the right
 [2] The door in the middle
 [3] The door to the left 
