@@ -167,16 +167,16 @@ print_slowly("You have been chosen to clear out a dungeon for the guild ")
 print_slowly("Best of luck to you, we hope you return...")
 print_slowly(f"As you walk towards the dungeon, you spot 3 doors, {name} you have to take your pick")
 player = adventurer(name)
-print_slowly(player.status())
 
 while player.LVL < player.max_LVL and not player.game_over:
     DoorNumber = None
-    while DoorNumber not in ["1", "2", "3"]:
+    while DoorNumber not in ["1", "2", "3", "s", "S"]:
         DoorNumber = input("""Which door do you choose adventurer?, the dungeon is not clear yet
 [1] The door to the right
 [2] The door in the middle
 [3] The door to the left 
--> """)
+[S] tatus
+-> """).lower()
         
         if DoorNumber == "1":
             print_slowly("You choose the door to the right!")
@@ -187,6 +187,9 @@ while player.LVL < player.max_LVL and not player.game_over:
         elif DoorNumber == "3":
             print_slowly("You choose the door to the left!")
             encounter = Open(player)    
+        elif DoorNumber == "s":
+            print_slowly(player.status())
+            continue
         else:
             print_slowly("Please enter a valid input fellow guild member") 
             continue
