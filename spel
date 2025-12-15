@@ -64,13 +64,40 @@ class adventurer:
 
             self.items.append(item)
             print_slowly(f"{item} has been added to your inventory")
-
+            
         def drop_item(self, item):
             if item in self.items:
                 self.items.remove(item)
                 print_slowly(f"{item} has been dropped")
             else:
                 print_slowly(f"{item} is not in inventory")
+        
+        def use(self, item):
+            self.player = player
+
+            if item == "Healing pot":
+                player.HP += 10
+                print_slowly("You drink a healing pot +10 HP")
+                
+
+            elif item == "Strength pot":
+                player.STR += 2
+                print_slowly("You drink a strenght pot +2 STR")
+                self.drop_item(item)
+
+            elif item == "Rotten apple":
+                print_slowly("You eat a rotten apple")
+                player.HP -= 3
+                print_slowly("You take 3 poison damage")
+                self.drop_item(item)
+
+            elif item == "Old Bok":
+                print_slowly("The old book has strange symbols, yet dont know the language but stil feel the knowledge +1 LVL")
+                player.level_up()
+                self.drop_item(item)
+
+            else:
+                print_slowly("this item is not useable")
 
         def show_Inventory(self):
             if not self.items:
