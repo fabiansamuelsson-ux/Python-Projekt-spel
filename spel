@@ -54,13 +54,6 @@ class adventurer:
         self.game_over = False
         self.inventory = self.Inventory()
 
-        if self.LVL < self.max_LVL:
-            self.LVL += 1
-            self.HP += 2
-            self.STR += 1
-            print_slowly(f"{self.name} leveled up to {self.LVL}!")
-            print_slowly(f"HP is now {self.HP}, STR is now {self.STR}.")
-
     def status(self):
         return f"{self.name} - LVL {self.LVL} HP {self.HP} STR {self.STR}"
 
@@ -170,12 +163,13 @@ player = adventurer(name)
 
 while player.LVL < player.max_LVL and not player.game_over:
     DoorNumber = None
-    while DoorNumber not in ["1", "2", "3", "s", "S"]:
+    while DoorNumber not in ["1", "2", "3", "s", "S", "i", "I"]:
         DoorNumber = input("""Which door do you choose adventurer?, the dungeon is not clear yet
 [1] The door to the right
 [2] The door in the middle
 [3] The door to the left 
-[S] tatus
+[S] Status
+[I] Inventory
 -> """).lower()
         
         if DoorNumber == "1":
@@ -189,6 +183,9 @@ while player.LVL < player.max_LVL and not player.game_over:
             encounter = Open(player)    
         elif DoorNumber == "s":
             print_slowly(player.status())
+            continue
+        elif DoorNumber == "i":
+            player.inventory.show_Inventory()
             continue
         else:
             print_slowly("Please enter a valid input fellow guild member") 
