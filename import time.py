@@ -6,7 +6,7 @@ f = Figlet(font="doom")
 print(f.renderText("DDD(Dungeon Destroyer Dome)"))
 
 #Spel
-def print_slowly(text, delay=0.01):
+def print_slowly(text, delay=0.05):
     for char in text:
         print(char, end='', flush=True)
         time.sleep(delay)
@@ -42,40 +42,43 @@ def spawn_enemy_for_level(LVL):
             ("Wolves", (7, 9), (10, 14), (4, 6), 30)
         ])
         return fiende(enemy_type[0], enemy_type[1], enemy_type[2], enemy_type[3], hp=enemy_type[4])
-    
-    
+
+
 class adventurer:
     max_LVL = 10
-    def __init__(self, name, HP=40, STR=5, LVL=1):
+    def __init__(self, name, HP=20, STR=5, LVL=1):
         self.name = name
         self.HP = HP
         self.STR = STR
         self.LVL = LVL
         self.game_over = False
-        self.items = []
-        self.inventory = self
+        self.inventory = self.Inventory()
 
     def status(self):
         return f"{self.name} - LVL {self.LVL} HP {self.HP} STR {self.STR}"
 
-    def add_item(self, item):
-        self.items.append(item)
-        print_slowly(f"{item} has been added to your inventory")
-            
-    def drop_item(self, item):
-        if item in self.items:
-            self.items.remove(item)
-            print_slowly(f"{item} has been dropped")
-        else:
-            print_slowly(f"{item} is not in inventory")
+    class Inventory:
+        def __init__(self):
+            self.items = []
+        def add_item(self, item):
 
-    def show_Inventory(self):
-        if not self.items:
-            print_slowly("inventory is empty")
-        else:
-            print_slowly("Your inventory contains:")
-            for i, item in enumerate(self.items, 1):
-                print_slowly(f"{i}. {item}")
+            self.items.append(item)
+            print_slowly(f"{item} has been added to your inventory")
+
+        def drop_item(self, item):
+            if item in self.items:
+                self.items.remove(item)
+                print_slowly(f"{item} has been dropped")
+            else:
+                print_slowly(f"{item} is not in inventory")
+
+        def show_Inventory(self):
+            if not self.items:
+                print_slowly("inventory is empty")
+            else:
+                print_slowly("Your inventory contains:")
+                for i, item in enumerate(self.items, 1):
+                    print_slowly(f"{i}. {item}")
 
     def level_up(self):
         if self.game_over:
@@ -122,15 +125,15 @@ class fälla:
         print_slowly(f"You triggered a {self.type} trap!")
         adventurer.HP -= self.damage
         print_slowly(f"You took {self.damage} damage! HP is now {adventurer.HP}.")
-        
+
         if player.HP < 0:
-            print_slowly(f"{adventurer.name} has been defeated by a trap...")
+            print_slowly(f"{adventurer.name} has been defeated by the trap...")
             player.game_over = True
             return False
         return True
-    
+
 class attack:
-    def __init__(self, damage_range=(1, 10), type="slash"):
+    def __init__(self, damage_range=(4, 6), type="slash"):
         if isinstance(damage_range, int):
             self.damage_range = (damage_range, damage_range)
         else:
@@ -163,10 +166,11 @@ print_slowly("You have been chosen to clear out a dungeon for the guild ")
 print_slowly("Best of luck to you, we hope you return...")
 print_slowly(f"As you walk towards the dungeon, you spot 3 doors, {name} you have to take your pick")
 player = adventurer(name)
+print_slowly(player.status())
 
 while player.LVL < player.max_LVL and not player.game_over:
     DoorNumber = None
-    while DoorNumber not in ["1", "2", "3", "s", "S", "i", "I"]:
+    while DoorNumber not in ["1", "2", "3", "s", "S"]:
         DoorNumber = input("""Which door do you choose adventurer?, the dungeon is not clear yet
 [1] The door to the right
 [2] The door in the middle
@@ -174,7 +178,7 @@ while player.LVL < player.max_LVL and not player.game_over:
 [S] Status
 [I] Inventory
 -> """).lower()
-        
+
         if DoorNumber == "1":
             print_slowly("You choose the door to the right!")
             encounter = Open(player)
@@ -189,11 +193,11 @@ while player.LVL < player.max_LVL and not player.game_over:
             continue
         elif DoorNumber == "i":
             player.inventory.show_Inventory()
-            use_choice = input ("what item do you want to use, write esc to exit " ).lower
-
+            use_choice = input ("what item do you want to use, write esc to exit").lower
             if use_choice == "rotten apple":
                 print_slowly("You eat a Rotten apple, you take 3 damage")
-                player.HP -=  3
+                player.HP -= 3
+                    
 
             elif use_choice == "healing pot":
                 print_slowly("You drink a healing pot, you heal 10 damage")
@@ -205,7 +209,7 @@ while player.LVL < player.max_LVL and not player.game_over:
 
             elif use_choice == "old book":
                 print_slowly("You read the old book, foreign knowledge floods your mind, you gain 1 level")
-                player.level_up
+                player.LVL += 1
             elif use_choice == "esc":
                 continue
             continue
@@ -271,4 +275,4 @@ while player.LVL < player.max_LVL and not player.game_over:
                 elif action == "s":
                     print_slowly(player.status())
             else:
-                print_slowly("Unknown action. Try 'a', 'i' or 's'.")
+                print_slowly("invalid input")
