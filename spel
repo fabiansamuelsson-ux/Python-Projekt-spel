@@ -2,7 +2,7 @@ import time
 import random
 
 #Spel
-def print_slowly(text, delay=0.01):
+def print_slowly(text, delay=0.05):
     for char in text:
         print(char, end='', flush=True)
         time.sleep(delay)
@@ -44,7 +44,7 @@ def spawn_enemy_for_level(LVL):
     
 class adventurer:
     max_LVL = 10
-    def __init__(self, name, HP=40, STR=5, LVL=1):
+    def __init__(self, name, HP=30, STR=5, LVL=1):
         self.name = name
         self.HP = HP
         self.STR = STR
