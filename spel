@@ -98,7 +98,7 @@ def Open(adventurer):
         return Kista()
     elif facing == 1:
         return spawn_enemy_for_level(adventurer.LVL)
-    else:
+    elif facing == 2:
         return fälla()
 
 class Kista:
@@ -189,6 +189,8 @@ while player.LVL < player.max_LVL and not player.game_over:
         elif DoorNumber == "i":
             player.inventory.show_Inventory()
             use_choice = input("what item do you want to use, write esc to exit -> ").lower()
+        else:
+            print_slowly("Please enter a valid input fellow guild member") 
 
             if use_choice == "rotten apple":
                 print_slowly("You eat a Rotten apple, you take 3 damage")
@@ -216,8 +218,6 @@ while player.LVL < player.max_LVL and not player.game_over:
             else: 
                 print_slowly("Unvalid choice input, exiting...")
                 continue
-        else:
-            print_slowly("Please enter a valid input fellow guild member") 
 
         if isinstance(encounter, Kista):
             print_slowly("You have found a chest!")
