@@ -274,6 +274,34 @@ while player.LVL < player.max_LVL and not player.game_over:
 
                 elif action == "i":
                     player.inventory.show_Inventory()
+                    use_choice = input("what item do you want to use, write esc to exit -> ").lower()
+
+                    if use_choice == "rotten apple":
+                        print_slowly("You eat a Rotten apple, you take 3 damage")
+                        player.HP() -= 3
+                        continue
+
+                    elif use_choice == "healing pot":
+                        print_slowly("You drink a healing pot, you heal 10 damage")
+                        player.HP() += 10
+                        continue
+
+                    elif use_choice == "strength pot":
+                        print_slowly("You drink a strength pot, you gain 1 strength")
+                        player.STR() += 1
+                        continue
+
+                    elif use_choice == "old book":
+                        print_slowly("You read the old book, foreign knowledge floods your mind, you gain 1 level")
+                        player.level_up()
+                        continue
+
+                    elif use_choice == "esc":
+                        continue
+
+                    else: 
+                        print_slowly("Unvalid choice input, exiting...")
+                        continue
 
                 elif action == "s":
                     print_slowly(player.status())
