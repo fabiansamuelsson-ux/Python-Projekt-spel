@@ -1,9 +1,5 @@
 import time
 import random
-from pyfiglet import Figlet
-f = Figlet(font="doom")
-
-print(f.renderText("DDD(Dungeon Destroyer Dome)"))
 
 #Spel
 def print_slowly(text, delay=0.01):
@@ -24,6 +20,7 @@ class fiende:
         self.damage = random.randint(self.damage_range[0], self.damage_range[1])
         self.max_HP = hp if hp is not None else 10 + (self.LVL - 1) * 2 + max(0, self.STR - 4)
         self.HP = self.max_HP
+        #visar damage ranger för fienderna, samt att fiender gör dubbel damage om den har högre STR
 
     def attack_damage(self):
         return random.randint(self.damage_range[0], self.damage_range[1])
@@ -42,6 +39,7 @@ def spawn_enemy_for_level(LVL):
             ("Wolves", (7, 9), (10, 14), (4, 6), 30)
         ])
         return fiende(enemy_type[0], enemy_type[1], enemy_type[2], enemy_type[3], hp=enemy_type[4])
+        #dette visar vilka stats fienderna har och vid vilka levelar de dycker up vid.
     
     
 class adventurer:
@@ -54,6 +52,7 @@ class adventurer:
         self.game_over = False
         self.items = []
         self.inventory = self
+        #Dina stats som spelara samt vad som är kopplar till vilka variabler.
 
     def status(self):
         return f"{self.name} - LVL {self.LVL} HP {self.HP} STR {self.STR}"
@@ -108,7 +107,7 @@ class Kista:
             "Healing pot",
             "Strength pot",
             "Rotten apple",
-            "Old Bok",
+            "Old Book",
         ]
 
 class fälla:
@@ -278,17 +277,17 @@ while player.LVL < player.max_LVL and not player.game_over:
 
                     if use_choice == "rotten apple":
                         print_slowly("You eat a Rotten apple, you take 3 damage")
-                        player.HP() -= 3
+                        player.HP -= 3
                         continue
 
                     elif use_choice == "healing pot":
                         print_slowly("You drink a healing pot, you heal 10 damage")
-                        player.HP() += 10
+                        player.HP += 10
                         continue
 
                     elif use_choice == "strength pot":
                         print_slowly("You drink a strength pot, you gain 1 strength")
-                        player.STR() += 1
+                        player.STR += 1
                         continue
 
                     elif use_choice == "old book":
